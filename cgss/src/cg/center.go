@@ -42,7 +42,7 @@ func (server *CenterServer) addPlayer(params string) error {
 	return nil
 }
 
-func (server *CenterServer)removePlayer(params string) error {
+func (server *CenterServer) removePlayer(params string) error {
 	server.mutex.Lock()
 	defer server.mutex.Unlock()
 
@@ -64,7 +64,7 @@ func (server *CenterServer)removePlayer(params string) error {
 	return errors.New("Player not found.")
 }
 
-func (server *CenterServer)listPlayer(params string)(players string, err error) {
+func (server *CenterServer) listPlayer(params string)(players string, err error) {
 	server.mutex.RLock()
 	defer server.mutex.RUnlock()
 
@@ -78,7 +78,7 @@ func (server *CenterServer)listPlayer(params string)(players string, err error) 
 }
 
 
-func (server *CenterServer)broadcast(params string) error {
+func (server *CenterServer) broadcast(params string) error {
 	var message Message
 	err := json.Unmarshal([]byte(params), &message)
 	
@@ -99,7 +99,7 @@ func (server *CenterServer)broadcast(params string) error {
 }
 
 
-func (server *CenterServer)Handle(method, params string) *ipc.Response {
+func (server *CenterServer) Handle(method, params string) *ipc.Response {
 	switch method {
 		case "addplayer":
 			err := server.addPlayer(params)
@@ -129,6 +129,6 @@ func (server *CenterServer)Handle(method, params string) *ipc.Response {
 	return &ipc.Response{Code:"200"}
 }
 
-func (server *CenterServer)Name() string {
+func (server *CenterServer) Name() string {
 	return "CenterServer"
 }
